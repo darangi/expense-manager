@@ -10,6 +10,9 @@ import 'package:sms/sms.dart';
 void main() async {
   runApp(MyApp());
   List<Sms> messages = await readSms();
+  //use a set so unique sender addresses can be returned;
+  Set contacts = new Set.from(messages.map((e) => e.sender));
+  log(contacts.toList().toString());
 }
 
 Future<List<Sms>> readSms() async {
