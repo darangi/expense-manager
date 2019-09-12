@@ -2,8 +2,21 @@ class Sms {
   String text;
   DateTime date;
   String sender;
+  String description;
+  double amount;
+
+  Sms setAmount(double amount) {
+    this.amount = amount;
+    return this;
+  }
+
   Sms setText(String text) {
     this.text = text;
+    return this;
+  }
+
+  Sms setDescription(String description) {
+    this.description = description;
     return this;
   }
 

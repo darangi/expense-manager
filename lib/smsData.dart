@@ -3,7 +3,7 @@ import 'sms.dart';
 
 class SmsData {
   SmsQuery query = new SmsQuery();
-
+  
   Future<List<Sms>> sms(List<String> contacts) async {
     List<SmsMessage> messages = [];
     List<Sms> filteredMessages = [];
