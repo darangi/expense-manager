@@ -25,13 +25,16 @@ class SelectContactsState extends State<SelectContacts> {
             child: Consumer<Model>(
               builder: (context, model, child) {
                 return new Text(
-                  "Continue ",
+                  model.contacts.length > 0 ? "Continue" : "Select contact(s)",
                   style: TextStyle(color: Colors.white),
                 );
               },
             ),
             onPressed: () {
               //dispatch an action to the store
+              if (data.contacts.length == 0) {
+                return;
+              }
               Navigator.pushNamed(context, "/summary");
             },
           ),
