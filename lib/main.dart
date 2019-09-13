@@ -1,7 +1,10 @@
 // Copyright 2018 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+import 'package:expense_manager/model.dart';
+import 'package:expense_manager/summary.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'selectContacts.dart';
 
 void main() async {
@@ -12,13 +15,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Expense Manager',
         home: Scaffold(
             appBar: AppBar(
               title: Text('Expense Manager'),
               backgroundColor: Colors.lightBlue,
             ),
-            body: new Container(
-                height: double.infinity,child: SelectContacts())));
+            body: ChangeNotifierProvider(
+                builder: (context) => Model(),
+                child: new Container(
+                    height: double.infinity,
+                    child: MaterialApp(
+                      initialRoute: '/',
+                      routes: {
+                        "/": (context) => SelectContacts(),
+                        "/summary": (context) => Summary()
+                      },
+                    )))));
   }
 }

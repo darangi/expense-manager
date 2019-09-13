@@ -1,10 +1,11 @@
+import 'package:expense_manager/model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'smsData.dart';
 
 class ContactsState extends State<Contacts> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
   final smsData = new SmsData();
-  List<String> selectedContacts = new List<String>();
   List<String> contacts = new List<String>();
   @override
   void initState() {
@@ -38,12 +39,12 @@ class ContactsState extends State<Contacts> {
           style: _biggerFont,
         ),
         trailing: Checkbox(
-            value: selectedContacts.contains(contact),
+            value: Provider.of<Model>(context).contacts.contains(contact),
             onChanged: (bool value) {
               setState(() {
                 value
-                    ? selectedContacts.add(contact)
-                    : selectedContacts.remove(contact);
+                    ? Provider.of<Model>(context).addContact(contact)
+                    : Provider.of<Model>(context).removeContact(contact);
               });
             }));
   }
