@@ -4,6 +4,12 @@ class Sms {
   String sender;
   String description;
   double amount;
+  bool isCredit;
+  
+  Sms setTransactionType(bool isCredit) {
+    this.isCredit = isCredit;
+    return this;
+  }
 
   Sms setAmount(double amount) {
     this.amount = amount;

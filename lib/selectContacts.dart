@@ -1,5 +1,4 @@
 import 'package:expense_manager/model.dart';
-import 'package:expense_manager/summary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'contacts.dart';
@@ -26,7 +25,7 @@ class SelectContactsState extends State<SelectContacts> {
             child: Consumer<Model>(
               builder: (context, model, child) {
                 return new Text(
-                  "Continue " + data.contacts.length.toString(),
+                  "Continue ",
                   style: TextStyle(color: Colors.white),
                 );
               },

@@ -49,7 +49,7 @@ class Filter {
 
     double result = amount.isNotEmpty
         ? double.tryParse(amount.replaceAllMapped(
-            new RegExp("r" + matchers + "|,", caseSensitive: false), (m) {
+            new RegExp("(" + matchers + "|,)", caseSensitive: false), (m) {
             return "";
           }))
         : 0;

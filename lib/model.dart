@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 class Model extends ChangeNotifier {
   List<String> _contacts = [];
-  List<Sms> _sms;
+  List<Sms> _sms = [];
 
   List<String> get contacts => _contacts;
 
