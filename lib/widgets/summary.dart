@@ -23,7 +23,7 @@ class SummaryState extends State<Summary> {
       contacts = instance.getStringList("contacts");
       if (contacts == null || contacts.length == 0) {
         //take to the settings page
-        Navigator.pushNamed(context, "/");
+        Navigator.popAndPushNamed(context, "/");
         return;
       }
       data.sms(contacts).then((sms) => {

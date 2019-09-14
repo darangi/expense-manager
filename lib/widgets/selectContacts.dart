@@ -57,7 +57,7 @@ class SelectContactsState extends State<SelectContacts> {
                 return;
               }
               pref.setStringList("contacts", model.contacts);
-              Navigator.pushNamed(context, "/summary");
+              Navigator.popAndPushNamed(context, "/summary");
             },
           ),
         ),
