@@ -13,13 +13,14 @@ class Model extends ChangeNotifier {
     _contacts.add(contact);
     notifyListeners();
   }
-  
+
   removeContact(String contact) {
     _contacts.remove(contact);
+    notifyListeners();
   }
 
-  addSms(Sms sms) {
-    _sms.add(sms);
+addSms(List<Sms> sms) {
+    _sms.addAll(sms);
     notifyListeners();
   }
 }
