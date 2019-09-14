@@ -173,7 +173,13 @@ class SummaryState extends State<Summary> {
                     color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.bold))),
-        Icon(Icons.settings, color: Colors.lightBlueAccent)
+        IconButton(
+          icon: Icon(Icons.settings),
+          color: Colors.lightBlueAccent,
+          onPressed: () {
+            Navigator.pushNamed(context, "/");
+          },
+        )
       ],
     );
   }
