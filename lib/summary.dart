@@ -12,22 +12,32 @@ class Summary extends StatefulWidget {
 
 class SummaryState extends State<Summary> {
   SmsData data = new SmsData();
-  Model model;
+  Model model = new Model();
   int selectedIndex = 0;
   bool isLoading = true;
   @override
-  Widget build(BuildContext context) {
-    model = Provider.of<Model>(context);
-    data.sms(context).then((val) => isLoading = false);
+  void initState() {
+    // data.sms(context).then((val) => {
+    //       setState(() {
+    //         isLoading = false;
+    //       })
+    //     });
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    model = Provider.of<Model>(context, listen: false);
     return MaterialApp(
         home: Scaffold(
       body: Center(
         child: Container(
           padding: EdgeInsets.only(top: 50, left: 10, right: 10),
           child: Consumer<Model>(builder: (context, model, child) {
-            if(isLoading){
-              return Center(child: Text("Welcome human..."),);
+            if (isLoading) {
+              return Center(
+                child: Text("Welcome human..."),
+              );
             }
             return Column(
               mainAxisSize: MainAxisSize.max,

@@ -9,11 +9,9 @@ class SmsData {
   SmsQuery query = new SmsQuery();
   Model model;
 
-  Future sms(BuildContext context) async {
-    model = Provider.of<Model>(context);
+  Future sms(BuildContext context, List<String> contacts) async {
     List<SmsMessage> messages = [];
     List<Sms> filteredMessages = [];
-    List<String> contacts = Provider.of<Model>(context).contacts;
     for (final address in contacts) {
       messages.addAll(
           await query.querySms(kinds: [SmsQueryKind.Inbox], address: address));
@@ -30,7 +28,7 @@ class SmsData {
           .setTransactionType(filter.isCredit());
       filteredMessages.add(sms);
     }
-    model.sms = filteredMessages;
+    return filteredMessages;
   }
 
   Future<List<String>> contacts() async {
