@@ -1,9 +1,7 @@
-import 'package:expense_manager/model.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:expense_manager/data/model.dart';
 import 'package:sms/sms.dart';
 import 'filter.dart';
-import 'sms.dart';
+import 'package:expense_manager/data/sms.dart';
 
 class SmsData {
   SmsQuery query = new SmsQuery();
@@ -20,6 +18,7 @@ class SmsData {
     for (final msg in messages) {
       Filter filter = new Filter(msg.body);
       var amount = filter.extractAmount();
+      //We only need transactions with amount greater than 1 to be be displayed
       if (amount < 1) {
         continue;
       }

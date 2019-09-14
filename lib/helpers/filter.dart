@@ -1,4 +1,4 @@
-import 'package:expense_manager/patterns.dart';
+import 'package:expense_manager/data/patterns.dart';
 
 class Filter {
   String text;

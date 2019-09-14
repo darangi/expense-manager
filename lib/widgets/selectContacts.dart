@@ -1,5 +1,5 @@
-import 'package:expense_manager/model.dart';
-import 'package:expense_manager/smsData.dart';
+import 'package:expense_manager/data/model.dart';
+import 'package:expense_manager/helpers/smsData.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

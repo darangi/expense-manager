@@ -1,4 +1,4 @@
-import 'package:expense_manager/sms.dart';
+import 'package:expense_manager/data/sms.dart';
 
 class Model {
   List<String> _contacts = [];
