@@ -1,8 +1,9 @@
 import 'package:expense_manager/smsData.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'formatter.dart';
 import 'model.dart';
 import 'sms.dart';
 
@@ -21,6 +22,11 @@ class SummaryState extends State<Summary> {
   void initState() {
     SharedPreferences.getInstance().then((instance) {
       contacts = instance.getStringList("contacts");
+      if (contacts == null || contacts.length == 0) {
+        //take to the settings page
+        Navigator.pushNamed(context, "/");
+        return;
+      }
       data.sms(contacts).then((sms) => {
             setState(() {
               isLoading = false;
@@ -153,7 +159,7 @@ class SummaryState extends State<Summary> {
                         ],
                       ),
                     ),
-                    Text("₦" + sms.amount.toString(),
+                    Text(Formatter.toNaira(sms.amount),
                         style: TextStyle(
                             fontSize: 12,
                             color:
@@ -217,7 +223,7 @@ class SummaryState extends State<Summary> {
         Row(
           children: <Widget>[
             Text(
-              "₦" + sum.toString(),
+              Formatter.toNaira(sum),
               style: TextStyle(color: Colors.black, fontSize: 25),
             )
           ],

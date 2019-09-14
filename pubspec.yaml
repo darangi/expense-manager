@@ -26,6 +26,7 @@ dependencies:
   sms: ^0.2.0   
   provider: ^3.0.0
   shared_preferences: 0.5.3+4
+  intl: 0.16.0
       
 dev_dependencies:
   flutter_test:
