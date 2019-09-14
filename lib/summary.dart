@@ -115,57 +115,57 @@ class SummaryState extends State<Summary> {
     ]));
   }
 
+  Widget description(Sms sms) {
+    return AlertDialog(
+      content: Container(
+        height: 100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(sms.sender,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
+                Text(
+                  Formatter.toHumanReadableDate(sms.date),
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.grey,
+                  ),
+                )
+              ],
+            ),
+            Divider(),
+            Text(
+              sms.description != null ? sms.description : "No description",
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(Formatter.toNaira(sms.amount),
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: selectedIndex == 0 ? Colors.red : Colors.green))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildRow(Sms sms) {
     return new GestureDetector(
         onTap: () {
           showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  content: Container(
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(sms.sender,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
-                            Text(
-                              Formatter.toHumanReadableDate(sms.date),
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey,
-                              ),
-                            )
-                          ],
-                        ),
-                        Divider(),
-                        Text(
-                          sms.description != null
-                              ? sms.description
-                              : "No description",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(Formatter.toNaira(sms.amount),
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: selectedIndex == 0
-                                        ? Colors.red
-                                        : Colors.green))
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return description(sms);
               });
         },
         child: Card(
