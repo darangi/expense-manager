@@ -251,7 +251,12 @@ class SummaryState extends State<Summary> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(Icons.filter_list, color: Colors.grey),
+            IconButton(
+              icon: Icon(Icons.filter_list, color: Colors.grey),
+              onPressed: () {
+                print("heeey");
+              },
+            ),
             Text(
               "21/02/22 - 21/02/22",
               style: TextStyle(

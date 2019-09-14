@@ -10,7 +10,10 @@ class Patterns {
         ..setDescriptionPattern("desc:"),
       new Matcher()
         ..setAmountPattern("AMT:NGN ")
-        ..setDescriptionPattern("desc:")
+        ..setDescriptionPattern("desc:"),
+      new Matcher()
+        ..setAmountPattern("AMT: ")
+        ..setDescriptionPattern("Desc:")
     ]);
   }
 }
