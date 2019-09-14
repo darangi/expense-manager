@@ -22,10 +22,12 @@ class Model {
 
   filter({DateTime from, DateTime to, String sender, bool isCredit = false}) {
     _sms = _allSms.where((sms) => sms.isCredit == isCredit).toList();
+    calculateSum();
   }
 
   set sms(List<Sms> sms) {
     _allSms = sms;
+    filter();
   }
 
   void calculateSum() {

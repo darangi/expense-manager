@@ -9,7 +9,7 @@ class SmsData {
   SmsQuery query = new SmsQuery();
   Model model;
 
-  Future sms(BuildContext context, List<String> contacts) async {
+  Future sms(List<String> contacts) async {
     List<SmsMessage> messages = [];
     List<Sms> filteredMessages = [];
     for (final address in contacts) {

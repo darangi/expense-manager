@@ -1,6 +1,7 @@
 import 'package:expense_manager/smsData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model.dart';
 import 'sms.dart';
@@ -14,43 +15,44 @@ class SummaryState extends State<Summary> {
   SmsData data = new SmsData();
   Model model = new Model();
   int selectedIndex = 0;
+  List<String> contacts = [];
   bool isLoading = true;
   @override
   void initState() {
-    // data.sms(context).then((val) => {
-    //       setState(() {
-    //         isLoading = false;
-    //       })
-    //     });
+    SharedPreferences.getInstance().then((instance) {
+      contacts = instance.getStringList("contacts");
+      data.sms(contacts).then((sms) => {
+            setState(() {
+              isLoading = false;
+              model.sms = sms;
+            })
+          });
+    });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    model = Provider.of<Model>(context, listen: false);
     return MaterialApp(
         home: Scaffold(
       body: Center(
         child: Container(
-          padding: EdgeInsets.only(top: 50, left: 10, right: 10),
-          child: Consumer<Model>(builder: (context, model, child) {
-            if (isLoading) {
-              return Center(
-                child: Text("Welcome human..."),
-              );
-            }
-            return Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                topBar(context),
-                amountSummary(model.sum),
-                dateFilter(),
-                transactions(model.sms),
-              ],
-            );
-          }),
-        ),
+            padding: EdgeInsets.only(top: 50, left: 10, right: 10),
+            child: isLoading
+                ? Center(
+                    child: Text("Welcome human..."),
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      topBar(context),
+                      amountSummary(model.sum),
+                      dateFilter(),
+                      transactions(model.sms),
+                    ],
+                  )),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
