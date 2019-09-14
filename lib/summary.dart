@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'model.dart';
+import 'sms.dart';
 
 class Summary extends StatefulWidget {
   @override
@@ -10,27 +11,33 @@ class Summary extends StatefulWidget {
 }
 
 class SummaryState extends State<Summary> {
+  SmsData data = new SmsData();
   int selectedIndex = 0;
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // new SmsData()
-    //     .sms(Provider.of<Model>(context).contacts)
-    //     .then((filteredSms) => {new Model().addSms(filteredSms)});
+    data.sms(context);
     return MaterialApp(
         home: Scaffold(
       body: Center(
         child: Container(
           padding: EdgeInsets.only(top: 50, left: 10, right: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              topBar(context),
-              amountSummary(context),
-              dateFilter(),
-              transactions(),
-            ],
-          ),
+          child: Consumer<Model>(builder: (context, model, child) {
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                topBar(context),
+                amountSummary(model.sum),
+                dateFilter(),
+                transactions(model.sms),
+              ],
+            );
+          }),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -73,7 +80,7 @@ class SummaryState extends State<Summary> {
     });
   }
 
-  Widget transactions() {
+  Widget transactions(List<Sms> sms) {
     return Flexible(
         child: Column(children: <Widget>[
       Expanded(
@@ -81,13 +88,13 @@ class SummaryState extends State<Summary> {
             padding: const EdgeInsets.all(16.0),
             itemCount: 30,
             itemBuilder: /*1*/ (context, i) {
-              return _buildRow("Stanbic");
+              return _buildRow(sms.elementAt(i));
             }),
       )
     ]));
   }
 
-  Widget _buildRow(String contact) {
+  Widget _buildRow(Sms sms) {
     return Card(
         child: new Container(
             width: MediaQuery.of(context).size.width,
@@ -105,16 +112,16 @@ class SummaryState extends State<Summary> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text("Stanbic",
+                          Text(sms.sender,
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold)),
-                          Text("Ozone cinemas cinemas sdsd sjdghskdjhgsk",
+                          Text(sms.description,
                               style:
                                   TextStyle(fontSize: 12, color: Colors.grey)),
                           Text(
-                            "21/02/22",
+                            sms.date.toLocal().toString(),
                             style: TextStyle(
                               fontSize: 10,
                               color: Colors.grey,
@@ -123,7 +130,7 @@ class SummaryState extends State<Summary> {
                         ],
                       ),
                     ),
-                    Text("₦5000",
+                    Text("₦" + sms.amount.toString(),
                         style: TextStyle(
                             fontSize: 12,
                             color:
@@ -167,7 +174,7 @@ class SummaryState extends State<Summary> {
         ));
   }
 
-  Widget amountSummary(BuildContext context) {
+  Widget amountSummary(double sum) {
     return Column(
       children: <Widget>[
         Container(
@@ -181,7 +188,7 @@ class SummaryState extends State<Summary> {
         Row(
           children: <Widget>[
             Text(
-              "₦320,000,000.00",
+              "₦" + sum.toString(),
               style: TextStyle(color: Colors.black, fontSize: 25),
             )
           ],

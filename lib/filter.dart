@@ -10,7 +10,7 @@ class Filter {
   }
 
   bool isCredit() {
-    return new RegExp(r"dr|debit", caseSensitive: false).hasMatch(this.text);
+    return new RegExp(r"(dr|debit)", caseSensitive: false).hasMatch(this.text);
   }
 
   String extractDescription() {
@@ -24,7 +24,7 @@ class Filter {
     exp = new RegExp(r"(" + matchers + ")(\\w{1,}.+)", caseSensitive: false);
     var description = exp.stringMatch(text);
 
-    return description.isNotEmpty ? description : "";
+    return description;
   }
 
   double extractAmount() {
@@ -47,7 +47,7 @@ class Filter {
     var amount =
         new RegExp(regexString, caseSensitive: false).stringMatch(text);
 
-    double result = amount.isNotEmpty
+    double result = amount != null
         ? double.tryParse(amount.replaceAllMapped(
             new RegExp("(" + matchers + "|,)", caseSensitive: false), (m) {
             return "";

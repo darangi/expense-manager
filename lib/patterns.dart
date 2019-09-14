@@ -5,7 +5,8 @@ class Patterns {
       new Matcher()
           .setAmountPattern("CREDIT:NGN|DEBIT:NGN")
           .setDescriptionPattern("DETAILS:"),
-      new Matcher().setAmountPattern("AMT:N").setDescriptionPattern("desc:")
+      new Matcher().setAmountPattern("AMT:N").setDescriptionPattern("desc:"),
+      new Matcher().setAmountPattern("AMT:NGN ").setDescriptionPattern("desc:")
     ]);
   }
 }
