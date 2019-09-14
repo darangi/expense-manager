@@ -19,12 +19,16 @@ class SmsData {
 
     for (final msg in messages) {
       Filter filter = new Filter(msg.body);
+      var amount = filter.extractAmount();
+      if (amount < 1) {
+        continue;
+      }
       var sms = new Sms()
           .setSender(msg.sender)
           .setText(msg.body)
           .setDate(msg.date)
           .setDescription(filter.extractDescription())
-          .setAmount(filter.extractAmount())
+          .setAmount(amount)
           .setTransactionType(filter.isCredit());
       filteredMessages.add(sms);
     }
