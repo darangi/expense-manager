@@ -24,12 +24,12 @@ class SmsData {
         continue;
       }
       var sms = new Sms()
-          .setSender(msg.sender)
-          .setText(msg.body)
-          .setDate(msg.date)
-          .setDescription(filter.extractDescription())
-          .setAmount(amount)
-          .setTransactionType(filter.isCredit());
+          ..setSender(msg.sender)
+          ..setText(msg.body)
+          ..setDate(msg.date)
+          ..setDescription(filter.extractDescription())
+          ..setAmount(amount)
+          ..setTransactionType(filter.isCredit());
       filteredMessages.add(sms);
     }
     return filteredMessages;
