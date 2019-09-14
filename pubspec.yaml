@@ -24,7 +24,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   sms: ^0.2.0   
-  provider: ^3.0.0
   shared_preferences: 0.5.3+4
   intl: 0.16.0
       
