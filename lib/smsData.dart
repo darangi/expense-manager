@@ -19,22 +19,18 @@ class SmsData {
           await query.querySms(kinds: [SmsQueryKind.Inbox], address: address));
     }
 
-    double amount = 0.00;
-    double sum = 0.00;
     for (final msg in messages) {
       Filter filter = new Filter(msg.body);
-      amount = filter.extractAmount();
       var sms = new Sms()
           .setSender(msg.sender)
           .setText(msg.body)
           .setDate(msg.date)
           .setDescription(filter.extractDescription())
-          .setAmount(amount);
-          sum = sum + amount;
+          .setAmount(filter.extractAmount())
+          .setTransactionType(filter.isCredit());
       filteredMessages.add(sms);
     }
-    model.addSms(filteredMessages);
-    model.setSum(sum);
+    model.sms = filteredMessages;
   }
 
   Future<List<String>> contacts() async {

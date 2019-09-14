@@ -10,7 +10,7 @@ class Filter {
   }
 
   bool isCredit() {
-    return new RegExp(r"(dr|debit)", caseSensitive: false).hasMatch(this.text);
+    return new RegExp(r"(cr|credit)", caseSensitive: false).hasMatch(this.text);
   }
 
   String extractDescription() {

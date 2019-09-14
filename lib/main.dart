@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-           appBar: AppBar(
-              title: Text('Expense Manager'),
-              backgroundColor: Colors.lightBlue,
-            ),
+          //  appBar: AppBar(
+          //     title: Text('Expense Manager'),
+          //     backgroundColor: Colors.lightBlue,
+          //   ),
             body: ChangeNotifierProvider(
                 builder: (context) => Model(),
                 child: MaterialApp(

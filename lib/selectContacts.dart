@@ -15,8 +15,8 @@ class SelectContactsState extends State<SelectContacts> {
     return new Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        new Flexible(fit: FlexFit.tight, child: Contacts()),
-        new Container(
+         Flexible(fit: FlexFit.tight, child: Contacts()),
+         Container(
           width: double.maxFinite,
           height: 48,
           margin: EdgeInsets.all(8),

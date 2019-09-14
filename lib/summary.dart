@@ -12,21 +12,23 @@ class Summary extends StatefulWidget {
 
 class SummaryState extends State<Summary> {
   SmsData data = new SmsData();
+  Model model;
   int selectedIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
-    data.sms(context);
+    model = Provider.of<Model>(context);
+    data.sms(context).then((val) => isLoading = false);
+
     return MaterialApp(
         home: Scaffold(
       body: Center(
         child: Container(
           padding: EdgeInsets.only(top: 50, left: 10, right: 10),
           child: Consumer<Model>(builder: (context, model, child) {
+            if(isLoading){
+              return Center(child: Text("Welcome human..."),);
+            }
             return Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -77,6 +79,7 @@ class SummaryState extends State<Summary> {
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
+      model.filter(isCredit: index == 1);
     });
   }
 
@@ -86,7 +89,7 @@ class SummaryState extends State<Summary> {
       Expanded(
         child: ListView.builder(
             padding: const EdgeInsets.all(16.0),
-            itemCount: 30,
+            itemCount: sms.length,
             itemBuilder: /*1*/ (context, i) {
               return _buildRow(sms.elementAt(i));
             }),
@@ -117,9 +120,17 @@ class SummaryState extends State<Summary> {
                                   fontSize: 14,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold)),
-                          Text(sms.description,
+                          Container(
+                            width:
+                                (50 / 100) * MediaQuery.of(context).size.width,
+                            child: Text(
+                              sms.description != null ? sms.description : "",
                               style:
-                                  TextStyle(fontSize: 12, color: Colors.grey)),
+                                  TextStyle(fontSize: 12, color: Colors.grey),
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                           Text(
                             sms.date.toLocal().toString(),
                             style: TextStyle(
@@ -162,7 +173,7 @@ class SummaryState extends State<Summary> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(Icons.date_range, color: Colors.grey),
+            Icon(Icons.filter_list, color: Colors.grey),
             Text(
               "21/02/22 - 21/02/22",
               style: TextStyle(

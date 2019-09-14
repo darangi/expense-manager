@@ -27,26 +27,28 @@ class ContactsState extends State<Contacts> {
         padding: const EdgeInsets.all(16.0),
         itemCount: contacts.length,
         itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
           return _buildRow(contacts.elementAt(i));
         });
   }
 
   Widget _buildRow(String contact) {
-    return ListTile(
-        title: Text(
-          contact,
-          style: _biggerFont,
-        ),
-        trailing: Checkbox(
-            value: Provider.of<Model>(context).contacts.contains(contact),
-            onChanged: (bool value) {
-              setState(() {
-                value
-                    ? Provider.of<Model>(context).addContact(contact)
-                    : Provider.of<Model>(context).removeContact(contact);
-              });
-            }));
+    return Column(children: <Widget>[
+      ListTile(
+          title: Text(
+            contact,
+            style: _biggerFont,
+          ),
+          trailing: Checkbox(
+              value: Provider.of<Model>(context).contacts.contains(contact),
+              onChanged: (bool value) {
+                setState(() {
+                  value
+                      ? Provider.of<Model>(context).addContact(contact)
+                      : Provider.of<Model>(context).removeContact(contact);
+                });
+              })),
+      Divider()
+    ]);
   }
 }
 
