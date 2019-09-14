@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             //     backgroundColor: Colors.lightBlue,
             //   ),
             body: MaterialApp(
-      initialRoute: '/',
+      initialRoute: '/summary',
       routes: {
         "/": (context) => SelectContacts(),
         "/summary": (context) => Summary()
