@@ -116,58 +116,113 @@ class SummaryState extends State<Summary> {
   }
 
   Widget _buildRow(Sms sms) {
-    return Card(
-        child: new Container(
-            width: MediaQuery.of(context).size.width,
-            padding:
-                new EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
+    return new GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Container(
+                    height: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(sms.sender,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                              Formatter.toHumanReadableDate(sms.date),
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                        Divider(),
+                        Text(
+                          sms.description != null
+                              ? sms.description
+                              : "No description",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(Formatter.toNaira(sms.amount),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: selectedIndex == 0
+                                        ? Colors.red
+                                        : Colors.green))
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
+        child: Card(
+            child: new Container(
+                width: MediaQuery.of(context).size.width,
+                padding: new EdgeInsets.only(
+                    top: 20, bottom: 20, left: 20, right: 20),
+                child: new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
-                      height: 60,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(sms.sender,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
-                          Container(
-                            width:
-                                (50 / 100) * MediaQuery.of(context).size.width,
-                            child: Text(
-                              sms.description != null ? sms.description : "",
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.grey),
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          height: 60,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(sms.sender,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                              Container(
+                                width: (50 / 100) *
+                                    MediaQuery.of(context).size.width,
+                                child: Text(
+                                  sms.description != null
+                                      ? sms.description
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.grey),
+                                  softWrap: false,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Text(
+                                Formatter.toHumanReadableDate(sms.date),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
                           ),
-                          Text(
-                            Formatter.toHumanReadableDate(sms.date),
+                        ),
+                        Text(Formatter.toNaira(sms.amount),
                             style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.grey,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Text(Formatter.toNaira(sms.amount),
-                        style: TextStyle(
-                            fontSize: 12,
-                            color:
-                                selectedIndex == 0 ? Colors.red : Colors.green))
+                                fontSize: 12,
+                                color: selectedIndex == 0
+                                    ? Colors.red
+                                    : Colors.green))
+                      ],
+                    )
                   ],
-                )
-              ],
-            )));
+                ))));
   }
 
   Widget topBar(context) {
