@@ -37,32 +37,49 @@ class SelectContactsState extends State<SelectContacts> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Flexible(fit: FlexFit.tight, child: contactList()),
-        Container(
-          width: double.maxFinite,
-          height: 48,
+    return MaterialApp(
+        home: Scaffold(
+            body: Center(
+      child: Container(
+          padding: EdgeInsets.only(top: 50, left: 10, right: 10),
           margin: EdgeInsets.all(8),
-          child: new FlatButton(
-            color: Colors.lightBlue,
-            child: Text(
-              model.contacts.length > 0 ? "Continue" : "Select contact(s)",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              //dispatch an action to the store
-              if (model.contacts.length == 0) {
-                return;
-              }
-              pref.setStringList("contacts", model.contacts);
-              Navigator.popAndPushNamed(context, "/summary");
-            },
-          ),
-        ),
-      ],
-    );
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: double.maxFinite,
+                child: Text("Select your Bank(s)",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+              Flexible(fit: FlexFit.tight, child: contactList()),
+              Container(
+                width: double.maxFinite,
+                height: 48,
+                margin: EdgeInsets.all(8),
+                child: new FlatButton(
+                  color: Colors.lightBlue,
+                  child: Text(
+                    model.contacts.length > 0
+                        ? "Continue"
+                        : "Select contact(s)",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    //dispatch an action to the store
+                    if (model.contacts.length == 0) {
+                      return;
+                    }
+                    pref.setStringList("contacts", model.contacts);
+                    Navigator.popAndPushNamed(context, "/summary");
+                  },
+                ),
+              ),
+            ],
+          )),
+    )));
   }
 
   Widget contactList() {
