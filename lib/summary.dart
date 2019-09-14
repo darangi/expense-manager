@@ -150,7 +150,7 @@ class SummaryState extends State<Summary> {
                             ),
                           ),
                           Text(
-                            sms.date.toLocal().toString(),
+                            Formatter.toHumanReadableDate(sms.date),
                             style: TextStyle(
                               fontSize: 10,
                               color: Colors.grey,
