@@ -25,6 +25,10 @@ class SelectContactsState extends State<SelectContacts> {
     SharedPreferences.getInstance().then((instance) {
       setState(() {
         pref = instance;
+        final contacts = pref.getStringList("contacts");
+        if (contacts != null && contacts.length > 1) {
+          contacts.map((contact) => model.addContact(contact));
+        }
       });
     });
   }
