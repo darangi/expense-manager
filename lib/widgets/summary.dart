@@ -265,7 +265,6 @@ class SummaryState extends State<Summary> {
   Widget dateFilter() {
     return Container(
         margin: EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 10),
-        padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -280,7 +279,7 @@ class SummaryState extends State<Summary> {
                   firstDate: new DateTime(new DateTime.now().year),
                   lastDate: new DateTime(2020),
                 );
-                if (picked.length > 0) {
+                if (picked !=  null && picked.length > 0) {
                   setState(() {
                     filter
                       ..setFrom(picked.elementAt(0))

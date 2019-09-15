@@ -4,6 +4,7 @@
 import 'package:expense_manager/widgets/selectContacts.dart';
 import 'package:expense_manager/widgets/summary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   runApp(MyApp());
@@ -12,12 +13,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
         home: Scaffold(
-            //  appBar: AppBar(
-            //     title: Text('Expense Manager'),
-            //     backgroundColor: Colors.lightBlue,
-            //   ),
             body: MaterialApp(
       initialRoute: '/summary',
       routes: {
