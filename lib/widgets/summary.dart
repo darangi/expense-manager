@@ -285,7 +285,7 @@ class SummaryState extends State<Summary> {
                   initialFirstDate: filter.from,
                   initialLastDate: filter.to,
                   firstDate: new DateTime(2000),
-                  lastDate: new DateTime(new DateTime.now().year),
+                  lastDate: new DateTime(new DateTime.now().year + 1),
                 );
                 if (picked != null && picked.length > 0) {
                   setState(() {
