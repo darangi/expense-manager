@@ -275,9 +275,8 @@ class SummaryState extends State<Summary> {
                 final List<DateTime> picked =
                     await DateRagePicker.showDatePicker(
                   context: context,
-                  initialFirstDate: new DateTime.now(),
-                  initialLastDate:
-                      (new DateTime.now()).add(new Duration(days: 7)),
+                  initialFirstDate: filter.from,
+                  initialLastDate: filter.to,
                   firstDate: new DateTime(new DateTime.now().year),
                   lastDate: new DateTime(2020),
                 );
