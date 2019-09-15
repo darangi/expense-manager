@@ -108,14 +108,20 @@ class SummaryState extends State<Summary> {
   Widget transactions(List<Sms> sms) {
     return Flexible(
         child: Column(children: <Widget>[
-      Expanded(
-        child: ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: sms.length,
-            itemBuilder: /*1*/ (context, i) {
-              return _buildRow(sms.elementAt(i));
-            }),
-      )
+      sms.length > 0
+          ? Expanded(
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: sms.length,
+                  itemBuilder: /*1*/ (context, i) {
+                    return _buildRow(sms.elementAt(i));
+                  }),
+            )
+          : Expanded(
+              child: Text(
+              "No transaction found within this period",
+              style: TextStyle(fontSize: 16),
+            ))
     ]));
   }
 

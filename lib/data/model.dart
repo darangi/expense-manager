@@ -38,6 +38,8 @@ class Model {
   }
 
   void calculateSum() {
-    _sum = _sms.map((s) => s.amount).reduce((a, b) => a + b);
+    _sum = _sms != null && _sms.length > 0
+        ? _sms.map((s) => s.amount).reduce((a, b) => a + b)
+        : 0;
   }
 }
