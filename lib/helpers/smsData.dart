@@ -19,16 +19,16 @@ class SmsData {
       Filter filter = new Filter(msg.body);
       var amount = filter.extractAmount();
       //We only need transactions with amount greater than 1 to be be displayed
-      if (amount < 1) {
+      if (amount == null || amount < 1) {
         continue;
       }
       var sms = new Sms()
-          ..setSender(msg.sender)
-          ..setText(msg.body)
-          ..setDate(msg.date)
-          ..setDescription(filter.extractDescription())
-          ..setAmount(amount)
-          ..setTransactionType(filter.isCredit());
+        ..setSender(msg.sender)
+        ..setText(msg.body)
+        ..setDate(msg.date)
+        ..setDescription(filter.extractDescription())
+        ..setAmount(amount)
+        ..setTransactionType(filter.isCredit());
       filteredMessages.add(sms);
     }
     return filteredMessages;
