@@ -5,12 +5,15 @@ class Model {
   List<Sms> _sms = [];
   List<Sms> _allSms = [];
   double _sum = 0;
+  double _balance = 0;
 
   List<String> get contacts => _contacts;
 
   List<Sms> get sms => _sms;
 
   double get sum => _sum;
+
+  double get balance => _balance;
 
   addContact(String contact) {
     _contacts.add(contact);
@@ -28,13 +31,27 @@ class Model {
             sms.date.isBefore(to))
         .toList();
     calculateSum();
+    calculateBalance();
   }
 
   set sms(List<Sms> sms) {
     _allSms = sms;
+
     filter(
         to: new DateTime.now(),
         from: new DateTime.now().subtract(new Duration(days: 30)));
+  }
+
+  void calculateBalance() {
+    final credit = _allSms
+        .where((sms) => sms.isCredit)
+        .map((sms) => sms.amount)
+        .reduce((a, b) => a + b);
+    final debit = _allSms
+        .where((sms) => !sms.isCredit)
+        .map((sms) => sms.amount)
+        .reduce((a, b) => a + b);
+    _balance = credit - debit;
   }
 
   void calculateSum() {

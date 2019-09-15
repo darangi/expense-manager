@@ -57,7 +57,7 @@ class SummaryState extends State<Summary> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      topBar(context),
+                      topBar(),
                       amountSummary(model.sum),
                       dateFilter(),
                       transactions(model.sms),
@@ -242,15 +242,23 @@ class SummaryState extends State<Summary> {
                 ))));
   }
 
-  Widget topBar(context) {
+  Widget topBar() {
     return Row(
       children: <Widget>[
         Expanded(
-            child: Text("Summary",
+            child: Row(
+          children: <Widget>[
+            Text("Balance: ",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold))),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold)),
+            Text(Formatter.toNaira(model.balance),
+                style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 15))
+          ],
+        )),
         IconButton(
           icon: Icon(Icons.settings),
           color: Colors.lightBlueAccent,
@@ -279,7 +287,7 @@ class SummaryState extends State<Summary> {
                   firstDate: new DateTime(new DateTime.now().year),
                   lastDate: new DateTime(2020),
                 );
-                if (picked !=  null && picked.length > 0) {
+                if (picked != null && picked.length > 0) {
                   setState(() {
                     filter
                       ..setFrom(picked.elementAt(0))
