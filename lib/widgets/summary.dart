@@ -118,9 +118,16 @@ class SummaryState extends State<Summary> {
                   }),
             )
           : Expanded(
+              child: Container(
+              margin: EdgeInsets.only(top: 100),
               child: Text(
-              "No transaction found within this period",
-              style: TextStyle(fontSize: 16),
+                "No" +
+                    (selectedIndex == 1 ? " credit " : " debit ") +
+                    "transaction found within this period",
+                style: TextStyle(
+                  fontSize: 15,
+                ),
+              ),
             ))
     ]));
   }
