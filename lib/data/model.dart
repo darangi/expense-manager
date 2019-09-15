@@ -20,7 +20,7 @@ class Model {
     _contacts.remove(contact);
   }
 
-  filter({DateTime from, DateTime to, String sender, bool isCredit = false}) {
+  filter({DateTime from, DateTime to, bool isCredit = false}) {
     _sms = _allSms
         .where((sms) =>
             sms.isCredit == isCredit &&
@@ -32,7 +32,9 @@ class Model {
 
   set sms(List<Sms> sms) {
     _allSms = sms;
-    filter();
+    filter(
+        to: new DateTime.now(),
+        from: new DateTime.now().subtract(new Duration(days: 30)));
   }
 
   void calculateSum() {
