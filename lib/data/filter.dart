@@ -1,6 +1,7 @@
 class Filter {
   List<String> _contacts = new List<String>();
-  DateTime _to, _from;
+  DateTime _to = new DateTime.now(),
+      _from = new DateTime.now().subtract(new Duration(days: 30));
 
   get contacts => _contacts;
 
@@ -9,7 +10,7 @@ class Filter {
   get from => _from;
 
   setFrom(DateTime date) => _from = date;
-  
+
   setTo(DateTime date) => _to = date;
 
   addContact(String contact) => _contacts.add(contact);
