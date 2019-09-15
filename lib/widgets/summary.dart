@@ -254,9 +254,7 @@ class SummaryState extends State<Summary> {
                     fontSize: 15,
                     fontWeight: FontWeight.bold)),
             Text(Formatter.toNaira(model.balance),
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 15))
+                style: TextStyle(color: Colors.green, fontSize: 15))
           ],
         )),
         IconButton(
@@ -271,49 +269,48 @@ class SummaryState extends State<Summary> {
   }
 
   Widget dateFilter() {
-    return Container(
-        margin: EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.filter_list, color: Colors.grey),
-              onPressed: () async {
-                final List<DateTime> picked =
-                    await DateRagePicker.showDatePicker(
-                  context: context,
-                  initialFirstDate: filter.from,
-                  initialLastDate: filter.to,
-                  firstDate: new DateTime(2000),
-                  lastDate: new DateTime(new DateTime.now().year + 1),
-                );
-                if (picked != null && picked.length > 0) {
-                  setState(() {
-                    filter
-                      ..setFrom(picked.elementAt(0))
-                      ..setTo(picked.elementAt(1));
-                  });
-                  //filter transaction by date
-                  model.filter(
-                      from: filter.from,
-                      to: filter.to,
-                      isCredit: selectedIndex == 1);
-                }
-              },
-            ),
-            Text(
-              (filter.from != null && filter.to != null)
-                  ? Formatter.toFilterWidgetDate(filter.from) +
-                      "-" +
-                      Formatter.toFilterWidgetDate(filter.to)
-                  : "Last 30 days",
-              style: TextStyle(
-                  fontSize: 12,
+    return GestureDetector(
+        onTap: () async {
+          final List<DateTime> picked = await DateRagePicker.showDatePicker(
+            context: context,
+            initialFirstDate: filter.from,
+            initialLastDate: filter.to,
+            firstDate: new DateTime(2000),
+            lastDate: new DateTime(new DateTime.now().year + 1),
+          );
+          if (picked != null && picked.length > 0) {
+            setState(() {
+              filter
+                ..setFrom(picked.elementAt(0))
+                ..setTo(picked.elementAt(1));
+            });
+            //filter transaction by date
+            model.filter(
+                from: filter.from, to: filter.to, isCredit: selectedIndex == 1);
+          }
+        },
+        child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Icon(
+                  Icons.date_range,
                   color: Colors.grey,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ));
+                ),
+                Text(
+                  (filter.from != null && filter.to != null)
+                      ? Formatter.toFilterWidgetDate(filter.from) +
+                          "-" +
+                          Formatter.toFilterWidgetDate(filter.to)
+                      : "Last 30 days",
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            )));
   }
 
   Widget amountSummary(double sum) {
