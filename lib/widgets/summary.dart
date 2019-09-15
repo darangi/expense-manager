@@ -1,6 +1,8 @@
+import 'package:expense_manager/data/filter.dart';
 import 'package:expense_manager/helpers/smsData.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 
 import '../helpers/formatter.dart';
 import '../data/model.dart';
@@ -14,6 +16,7 @@ class Summary extends StatefulWidget {
 class SummaryState extends State<Summary> {
   SmsData data = new SmsData();
   Model model = new Model();
+  Filter filter = new Filter();
   int selectedIndex = 0;
   List<String> contacts = [];
   bool isLoading = true;
@@ -26,6 +29,8 @@ class SummaryState extends State<Summary> {
         Navigator.popAndPushNamed(context, "/");
         return;
       }
+      contacts.forEach((contact) => model.addContact(contact));
+
       data.sms(contacts).then((sms) => {
             setState(() {
               isLoading = false;
@@ -96,7 +101,7 @@ class SummaryState extends State<Summary> {
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
-      model.filter(isCredit: index == 1);
+      model.filter(isCredit: index == 1, from: filter.from, to: filter.to);
     });
   }
 
@@ -253,12 +258,36 @@ class SummaryState extends State<Summary> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.filter_list, color: Colors.grey),
-              onPressed: () {
-                print("heeey");
+              onPressed: () async {
+                final List<DateTime> picked =
+                    await DateRagePicker.showDatePicker(
+                  context: context,
+                  initialFirstDate: new DateTime.now(),
+                  initialLastDate:
+                      (new DateTime.now()).add(new Duration(days: 7)),
+                  firstDate: new DateTime(new DateTime.now().year),
+                  lastDate: new DateTime(2020),
+                );
+                if (picked.length > 0) {
+                  setState(() {
+                    filter
+                      ..setFrom(picked.elementAt(0))
+                      ..setTo(picked.elementAt(1));
+                  });
+                  //filter transaction by date
+                  model.filter(
+                      from: filter.from,
+                      to: filter.to,
+                      isCredit: selectedIndex == 1);
+                }
               },
             ),
             Text(
-              "21/02/22 - 21/02/22",
+              (filter.from != null && filter.to != null)
+                  ? Formatter.toFilterWidgetDate(filter.from) +
+                      "-" +
+                      Formatter.toFilterWidgetDate(filter.to)
+                  : "Last 30 days",
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey,

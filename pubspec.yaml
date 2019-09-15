@@ -26,6 +26,7 @@ dependencies:
   sms: ^0.2.0   
   shared_preferences: 0.5.3+4
   intl: 0.16.0
+  date_range_picker: ^1.0.3
       
 dev_dependencies:
   flutter_test:

@@ -21,7 +21,9 @@ class Model {
   }
 
   filter({DateTime from, DateTime to, String sender, bool isCredit = false}) {
-    _sms = _allSms.where((sms) => sms.isCredit == isCredit).toList();
+    to = to ?? new DateTime.now();
+    from = from ?? new DateTime.now().subtract(new Duration(days: 30));
+    _sms = _allSms.where((sms) => sms.isCredit == isCredit && sms.date.isAfter(from) && sms.date.isBefore(to)).toList();
     calculateSum();
   }
 
