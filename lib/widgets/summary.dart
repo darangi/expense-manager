@@ -26,8 +26,8 @@ class SummaryState extends State<Summary> {
       contacts = instance.getStringList("contacts");
       if (contacts == null || contacts.length == 0) {
         //take to the settings page
-        Navigator.pushNamed(context, "/contacts");
-        dispose();
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            "/contacts", (Route<dynamic> route) => false);
         return;
       }
       contacts.forEach((contact) => model.addContact(contact));
