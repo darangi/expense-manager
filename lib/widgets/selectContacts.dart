@@ -73,7 +73,9 @@ class SelectContactsState extends State<SelectContacts> {
                       return;
                     }
                     pref.setStringList("contacts", model.contacts);
-                    Navigator.popAndPushNamed(context, "/summary");
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "/", (Route<dynamic> route) => false);
+                    // dispose();
                   },
                 ),
               ),

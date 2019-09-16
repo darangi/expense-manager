@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
             body: MaterialApp(
-      initialRoute: '/summary',
+              initialRoute: "/",
       routes: {
-        "/": (context) => SelectContacts(),
-        "/summary": (context) => Summary()
+        "/": (context) => Summary(),
+        "/contacts": (context) => SelectContacts()
       },
     )));
   }

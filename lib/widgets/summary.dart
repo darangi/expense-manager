@@ -26,7 +26,8 @@ class SummaryState extends State<Summary> {
       contacts = instance.getStringList("contacts");
       if (contacts == null || contacts.length == 0) {
         //take to the settings page
-        Navigator.popAndPushNamed(context, "/");
+        Navigator.pushNamed(context, "/contacts");
+        dispose();
         return;
       }
       contacts.forEach((contact) => model.addContact(contact));
@@ -261,7 +262,7 @@ class SummaryState extends State<Summary> {
           icon: Icon(Icons.settings),
           color: Colors.lightBlueAccent,
           onPressed: () {
-            Navigator.pushNamed(context, "/");
+            Navigator.pushNamed(context, "/contacts");
           },
         )
       ],
