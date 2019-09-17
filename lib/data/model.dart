@@ -28,7 +28,7 @@ class Model {
         .where((sms) =>
             sms.isCredit == isCredit &&
             sms.date.isAfter(from) &&
-            sms.date.isBefore(to))
+            sms.date.isBefore(to.add(new Duration(days: 1))))
         .toList();
     calculateSum();
     calculateBalance();
