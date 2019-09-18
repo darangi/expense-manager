@@ -3,16 +3,16 @@ class Patterns {
   Patterns() {
     matchers.addAll([
       new Matcher()
-        ..setAmountPattern("CREDIT:NGN|DEBIT:NGN")
+        ..setAmountPattern("CREDIT:|DEBIT:")
         ..setDescriptionPattern("DETAILS:"),
       new Matcher()
-        ..setAmountPattern("AMT:N")
+        ..setAmountPattern("AMT:")
         ..setDescriptionPattern("desc:"),
       new Matcher()
-        ..setAmountPattern("AMT:NGN ")
+        ..setAmountPattern("AMT:")
         ..setDescriptionPattern("desc:"),
       new Matcher()
-        ..setAmountPattern("AMT: ")
+        ..setAmountPattern("AMT:")
         ..setDescriptionPattern("Desc:")
     ]);
   }

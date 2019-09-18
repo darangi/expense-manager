@@ -35,21 +35,13 @@ class Filter {
     String matchers = patterns.matchers.map((matcher) {
       return matcher.amount;
     }).join("|");
-    String regexString = "r(" +
-        matchers +
-        ")(\\d{1,}[,\\.]\\d{1,}[,\\.]\\d{1,}[,\\.]\\d{1,})|(" +
-        matchers +
-        ")(\\d{1,}[,\\.])\\d{1,}[,\\.]\\d{1,}|(" +
-        matchers +
-        ")(\\d{1,}[,\\.])\\d{1,}|(" +
-        matchers +
-        ")(\\d{1,})";
+    String regexString = "r(("+matchers+")\\w*\\s*\\d{1,}[,.]\\d{1,}[,.]\\d{1,}[,.]\\d{1,})|(("+matchers+")\\w*\\s*\\d{1,}[,.]\\d{1,}[,.]\\d{1,})|(("+matchers+")\\w*\\s*\\d{1,}[,.]\\d{1,})|(("+matchers+")\\w*\\s*\\d{1,})";
     var amount =
         new RegExp(regexString, caseSensitive: false).stringMatch(text);
 
     double result = amount != null
         ? double.tryParse(amount.replaceAllMapped(
-            new RegExp("(" + matchers + "|,)", caseSensitive: false), (m) {
+            new RegExp("(?!\\.)\\D", caseSensitive: false, multiLine: true), (m) {
             return "";
           }))
         : 0;
