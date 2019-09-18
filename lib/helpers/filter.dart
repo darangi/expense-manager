@@ -24,6 +24,10 @@ class Filter {
     exp = new RegExp(r"(" + matchers + ")(\\w{1,}.+)", caseSensitive: false);
     var description = exp.stringMatch(text);
 
+    description = description == null
+        ? ""
+        : description.replaceAllMapped(new RegExp(r""+matchers+"",caseSensitive: false), (m) => "");
+
     return description;
   }
 
@@ -35,16 +39,27 @@ class Filter {
     String matchers = patterns.matchers.map((matcher) {
       return matcher.amount;
     }).join("|");
-    String regexString = "r(("+matchers+")\\w*\\s*\\d{1,}[,.]\\d{1,}[,.]\\d{1,}[,.]\\d{1,})|(("+matchers+")\\w*\\s*\\d{1,}[,.]\\d{1,}[,.]\\d{1,})|(("+matchers+")\\w*\\s*\\d{1,}[,.]\\d{1,})|(("+matchers+")\\w*\\s*\\d{1,})";
+
+    String regexString = "r((" +
+        matchers +
+        ")\\w*\\s*\\d{1,}[,.]\\d{1,}[,.]\\d{1,}[,.]\\d{1,})|((" +
+        matchers +
+        ")\\w*\\s*\\d{1,}[,.]\\d{1,}[,.]\\d{1,})|((" +
+        matchers +
+        ")\\w*\\s*\\d{1,}[,.]\\d{1,})|((" +
+        matchers +
+        ")\\w*\\s*\\d{1,})";
     var amount =
         new RegExp(regexString, caseSensitive: false).stringMatch(text);
 
     double result = amount != null
         ? double.tryParse(amount.replaceAllMapped(
-            new RegExp("(?!\\.)\\D", caseSensitive: false, multiLine: true), (m) {
+            new RegExp("(?!\\.)\\D", caseSensitive: false, multiLine: true),
+            (m) {
             return "";
           }))
         : 0;
+        
     return result;
   }
 }
